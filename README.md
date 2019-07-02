@@ -1,7 +1,7 @@
 # RateBook
-Sprig application in which users can rate books and add friends.
+Sprig application in which users can rate books and add friends.<br/><br/>
 
-Contains:
--database connection
--rest and thymeleaf (I know i should use one of them but its my learning project, in future i'll change all to rest)
+Contains:<br/>
+-database connection<br/>
+-rest and thymeleaf (I know i should use one of them but its my learning project, in future i'll change all to rest)<br/>
 -spring security
