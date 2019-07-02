@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:include="layout :: head">
+</head>
+<body>
+<div th:include="layout :: navigationPanel"></div>
+<div sec:authorize="isAuthenticated()">
+    <h1>Przeczytane:</h1>
+    <div th:if="${#lists.isEmpty(ratelist)}">
+        Brak przeczytanych książek...
+    </div>
+    <table th:if="${!#lists.isEmpty(ratelist)}">
+        <thead>
+        <tr>
+            <th>Książka</th>
+            <th>Ocena</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="rate: ${ratelist}">
+
+            <div th:each="book: ${readBookList}">
+                <div th:if="${rate.book == book.id}">
+                    <td th:text="${book.title}"></td>
+                </div>
+            </div>
+
+            <td th:text="${rate.rate}"></td>
+            <td>
+                <form th:action="@{'/editRate?id='+${rate.id}+'&?rate='+value}" method="post" th:object="${bookEdit}">
+                    <select name="rate">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                    </select>
+
+                    <input type="submit" value="Edytuj">
+                </form>
+            </td>
+            <td sec:authorize="isAuthenticated()">
+                <!-- ten atrybut pozwala na określenie widoczności powiązanego tagu HTML dla statusu połączenia, w przypadku gdy użytkownik nie jest zalogowany to część tagów nie będzie wyświetlana użytkownikowi aplikacji -->
+                <a th:href="@{'/deleteFromRead?id=' + ${rate.id}}">Usuń książkę</a>
+                <!-- ten atrybut pozwala na określenie bezwzględnej ścieżki w naszej aplikacji iparametryzowania adresów URL względem stanu aplikacj -->
+
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div th:include="layout :: footer"></div>
+</body>
+</html>

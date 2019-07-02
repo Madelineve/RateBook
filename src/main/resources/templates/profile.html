@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:include="layout :: head">
+</head>
+<body >
+<div th:include="layout :: navigationPanel"></div>
+<div sec:authorize="isAuthenticated()">
+<h1  th:text="'Witaj ' +${user.name} + ' ' + ${user.surname}"></h1>
+    <td sec:authorize="isAuthenticated()"> <a th:href="@{'/delete?id=' + ${user.userid}}">Usuń konto</a></td>
+
+</div>
+
+<div th:include="layout :: footer"></div>
+</body>
+</html>

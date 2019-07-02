@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:include="layout :: head">
+</head>
+<body>
+<div sec:authorize="isAuthenticated()">
+<div th:include="layout :: navigationPanel"></div>
+
+<h1>Biblioteka:</h1>
+
+<div th:if="${#lists.isEmpty(booklist)}">
+    Brak książek...
+</div>
+
+<table th:if="${!#lists.isEmpty(booklist)}">
+    <thead>
+    <tr>
+        <th></th>
+        <th>Tytuł</th>
+        <th>Autor</th>
+        <th></th>
+        <th>Opis</th>
+        <th>Kategoria</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="book: ${booklist}">
+
+        <td><img height="100px" width="100px"
+                 src="http://localhost/phpmyadmin/tbl_get_field.php?db=projekt&table=files&where_clause=%60files%60.%60id%60+%3D+%276%27&transform_key=data&sql_query=SELECT+%2A+FROM+%60files%60">
+        </td>
+        <td th:text="${book.title}"></td>
+        <td th:text="${book.authorName}"></td>
+        <td th:text="${book.authorSurname}"></td>
+        <td th:text="${book.description}"></td>
+        <td th:text="${book.category}"></td>
+        <td sec:authorize="isAuthenticated()">
+
+            <form th:action="@{'/addRate?id='+${book.id}+'&?rate='+value}" method="post" th:object="${bookNew}">
+                <select name="rate">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                </select>
+
+                <input type="submit" value="Przeczytane">
+            </form>
+
+        <td sec:authorize="isAuthenticated()">
+            <form th:action="@{'/addWant?id=' + ${book.id}}" method="post" th:object="${bookNew1}">
+                <input type="submit" value="Chcę przeczytać"></form>
+        <td sec:authorize="isAuthenticated()">
+            <a th:href="@{'/deleteBook?id=' + ${book.id}}">Usuń książkę</a>
+
+    </tr>
+    </tbody>
+</table>
+</div>
+<div th:include="layout :: footer"></div>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:include="layout :: head">
+</head>
+<body>
+<div th:include="layout :: navigationPanel"></div>
+<div sec:authorize="isAuthenticated()">
+<h1>Chcę przeczytać:</h1>
+<div th:if="${#lists.isEmpty(wantlist)}">
+    Nie chcesz czytać...
+</div>
+<table th:if="${!#lists.isEmpty(wantlist)}">
+    <thead>
+    <tr>
+        <th>Tytuł</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="want: ${wantlist}">
+
+        <div th:each="book: ${readBookList}">
+            <div th:if="${want.book == book.id}">
+                <td th:text="${book.title}"></td>
+            </div>
+        </div>
+
+        <td sec:authorize="isAuthenticated()"> <a th:href="@{'/deleteFromWant?id=' + ${want.id}}">Usuń książkę</a>
+
+    </tr>
+    </tbody>
+</table>
+</div>
+<div th:include="layout :: footer"></div>
+
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:include="layout :: head">
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <title>Spring Boot File Upload / Download Rest API Example</title>
+    <link rel="stylesheet" href="/css/main.css" />-->
+</head>
+<body>
+<div th:include="layout :: navigationPanel"></div>
+<div sec:authorize="isAuthenticated()">
+<noscript>
+    <h2>Sorry! Your browser doesn't support Javascript</h2>
+</noscript>
+<div class="upload-container">
+    <div class="upload-header">
+
+        <h2>Dodaj książkę</h2>
+    </div>
+    <div class="upload-content">
+        <div class="single-upload">
+
+            <form id="singleUploadForm" name="singleUploadForm">
+
+                <input type="text" id="title" name="title" placeholder="Tytuł" pattern="{3,50}" required/>
+                <input type="text" id="authorName" name="authorName" placeholder="Imię autora" pattern="[A-Za-z]{3,50}" required/>
+                <input type="text" id="authorSurname" name="authorSurname" placeholder="Nazwisko autora" pattern="[A-Za-z]{3,50}" required/>
+                <input type="text" id="description" name="description" placeholder="Opis" pattern="{3,255}" required/>
+                <input type="text" id="category" name="category" placeholder="Kategoria" pattern="[A-Za-z]{3,50}" required/>
+
+                <input id="singleFileUploadInput" type="file" name="file" class="file-input"  />
+                <button type="submit" class="primary submit-btn">Submit</button>
+
+            </form>
+
+
+
+
+            <div class="upload-response">
+                <div id="singleFileUploadError"></div>
+                <div id="singleFileUploadSuccess"></div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="/js/main1.js" ></script>
+</div>
+</body>
+</html>

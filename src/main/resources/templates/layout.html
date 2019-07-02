@@ -1,0 +1,62 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleafspring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:th="http://www.thymeleaf.org" xmlns:security="http://www.springframework.org/schema/security">
+<head th:fragment="head">
+
+    <security:intercept-url pattern="/resources/**" access="permitAll" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+
+
+<div th:fragment="navigationPanel">
+    <ul>
+
+        <li sec:authorize="!isAuthenticated()"> <a th:href="@{/register}">Zarejestruj się</a></li>
+        <li sec:authorize="isAuthenticated()" > <a th:href="@{/users}">Znajomi</a></li>
+        <li sec:authorize="!isAuthenticated()"> <a th:href="@{/login}">Zaloguj się</a></li>
+
+        <li sec:authorize="isAuthenticated()" class="dropdown">
+            <a th:href="@{/profile}" class="dropbtn">Profil</a>
+            <ul class="dropdown-content">
+                <li sec:authorize="isAuthenticated()"><a th:href="@{/rates}">Przeczytane</a></li>
+                <li sec:authorize="isAuthenticated()"><a th:href="@{/wantRead}">Chcę przeczytać</a></li>
+                <li sec:authorize="isAuthenticated()">Usuń</li>
+            </ul>
+        </li>
+
+
+        <li sec:authorize="isAuthenticated()" class="dropdown">
+            <a th:href="@{/books}" class="dropbtn">Książki</a>
+            <ul class="dropdown-content">
+                <li sec:authorize="isAuthenticated()">
+                    <a th:href="@{/uploadFile}">Dodaj nową</a></li>
+            </ul>
+        </li>
+
+        <li sec:authorize="isAuthenticated()">  <a th:href="@{/logout}">Wyloguj się</a></li>
+    </ul>
+</div>
+
+<script>
+    $(".drop")
+    .mouseover(function() {
+        $(".dropdown").show(300);
+    });
+    $(".drop")
+    .mouseleave(function() {
+        $(".dropdown").hide(300);
+    });
+
+</script>
+<div th:fragment="footer">
+    <footer class="footer">
+        <hr/>
+        <p align="center">© Magdalena Psujek</p>
+    </footer>
+</div>
+</body>
+</html>

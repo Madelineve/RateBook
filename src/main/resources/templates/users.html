@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:include="layout :: head">
+</head>
+<body>
+<div th:include="layout :: navigationPanel"></div>
+<div sec:authorize="isAuthenticated()">
+
+    <h1>Zaproszenia:</h1>
+</div>
+<div th:if="${#lists.isEmpty(inviteList)}">Brak zaproszeń</div>
+<table th:if="${!#lists.isEmpty(inviteList)}">
+    <thead>
+    <tr>
+        <th>Imie</th>
+        <th>Nazwisko</th>
+        <th>Login</th>
+        <th></th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="invited: ${inviteList}">
+        <div th:if="${invited.state == 1}">
+
+            <div th:each="user: ${userlist}">
+                <div th:if="${invited.user1 == user.userid}">
+                    <td th:text="${user.name}"></td>
+                    <td th:text="${user.surname}"></td>
+                    <td th:text="${user.login}"></td>
+                    <td sec:authorize="isAuthenticated()"><a th:href="@{'/accept?id=' + ${user.userid}}">+</a></td>
+                    <td sec:authorize="isAuthenticated()"><a th:href="@{'/deleteInv?id=' + ${invited.id}}">-</a></td>
+                </div>
+            </div>
+        </div>
+    </tr>
+    </tbody>
+</table>
+</div>
+
+<h1>Znajomi:</h1>
+<div th:if="${#lists.isEmpty(inviteList)}"><!--Brak zajomych--></div>
+<table >
+    <thead>
+    <tr>
+        <th>Imie</th>
+        <th>Nazwisko</th>
+        <th>Login</th>
+        <th></th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="friend: ${inviteList}">
+        <div th:if="${friend.state == 2}">
+
+            <div th:each="user: ${userlist}">
+                <div th:if="${friend.user1 == user.userid}">
+                    <td th:text="${user.name}"></td>
+                    <td th:text="${user.surname}"></td>
+                    <td th:text="${user.login}"></td>
+                    <td sec:authorize="isAuthenticated()"><a th:href="@{'/deleteInv?id=' + ${friend.id}}">-</a></td>
+                </div>
+            </div>
+        </div>
+    </tr>
+    <tr th:each="friend: ${friendsList3}">
+        <div th:if="${friend.state == 2}">
+
+            <div th:each="user: ${userlist}">
+                <div th:if="${friend.user2 == user.userid}">
+                    <td th:text="${user.name}"></td>
+                    <td th:text="${user.surname}"></td>
+                    <td th:text="${user.login}"></td>
+                    <td sec:authorize="isAuthenticated()"><a th:href="@{'/deleteInv?id=' + ${friend.id}}">-</a></td>
+                </div>
+            </div>
+        </div>
+    </tr>
+    </tbody>
+</table>
+</div>
+
+
+<h1>Lista użytkowników:</h1>
+<div th:if="${#lists.isEmpty(userlist)}">
+    Brak użytkowników w bazie danych...
+</div>
+<table th:if="${!#lists.isEmpty(userlist)}">
+    <thead>
+    <tr>
+        <th>Imie</th>
+        <th>Nazwisko</th>
+        <th>Login</th>
+        <th></th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user1: ${userlist}">
+        <td th:text="${user1.name}"></td>
+        <td th:text="${user1.surname}"></td>
+        <td th:text="${user1.login}"></td>
+        <td sec:authorize="isAuthenticated()"><a th:href="@{'/friends?id=' + ${user1.userid}}">+</a></td>
+    </tr>
+    </tbody>
+</table>
+</div>
+<div th:include="layout :: footer"></div>
+</body>
+</html>

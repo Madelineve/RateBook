@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:include="layout :: head">
+</head>
+<body >
+<div th:include="layout :: navigationPanel"></div>
+<h1>Rejestracja:</h1>
+<form th:action="@{/register}" method="POST" th:object="${user}">
+    <input type="text" th:field="*{name}"  th:errorClass="error" placeholder="Imię" pattern="[A-Za-z]{3,30}" required />
+
+    <input type="text" th:field="*{surname}"  th:errorClass="error" placeholder="Nazwisko" pattern="[A-Za-z]{3,30}" required />
+
+    <input type="text" th:field="*{login}"  th:errorClass="error" placeholder="Login" pattern="[A-Za-z0-9]{3,24}" required />
+
+    <input type="password" th:field="*{password}"  th:errorClass="error" placeholder="Hasło" pattern="{6,24}" required />
+
+    <button type="submit">Zarejestruj się</button>
+</form>
+<div th:include="layout :: footer"></div>
+</body>
+</html>
